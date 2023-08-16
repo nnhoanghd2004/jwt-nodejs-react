@@ -1,4 +1,5 @@
 import express from "express"
+import controller from "../controller/homeController"
 
 const router = express.Router();
 
@@ -7,10 +8,9 @@ const router = express.Router();
  * @param {*} app : express app
  */
 const initWebRoutes = (app) => {
-    router.get("/", (req, res) => {
-        return res.send("Hello world");
-    })
-
+    router.get("/", controller.handlerHomePage)
+    router.get("/user", controller.handlerUserPage)
+    // default display when open website, start by "/"
     return app.use("/", router);
 }
 
