@@ -10,6 +10,7 @@ const router = express.Router();
 const initWebRoutes = (app) => {
     router.get("/", controller.handlerHomePage)
     router.get("/user", controller.handlerUserPage)
+    router.post("/users/create-user", controller.handleCreateUser)
     // default display when open website, start by "/"
     return app.use("/", router);
 }
