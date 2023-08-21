@@ -12,6 +12,8 @@ const initWebRoutes = (app) => {
     router.get("/user", controller.handlerUserPage)
     router.post("/users/create-user", controller.handleCreateUser)
     router.post("/delete-user/:id", controller.handleDeleteUser)
+    router.get("/update-user/:id", controller.getUser)
+    router.post("/user/update-user", controller.handleUpdateUser)
     // default display when open website, start by "/"
     return app.use("/", router);
 }
