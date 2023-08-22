@@ -2,9 +2,13 @@ import express from "express"
 import configViewEngine from "./config/viewEngine"
 import initWebRoutes from "./routes/web"
 import bodyParser from "body-parser"
+// import testConnect from "./config/connectDB"
 
 // sử dụng port
 require("dotenv").config();
+
+// test connection
+// testConnect()
 
 const app = express();
 const POST = process.env.PORT || 8080;
