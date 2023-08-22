@@ -1,1 +1,7 @@
 npm i @babel/core @babel/node @babel/preset-env bcryptjs body-parser dotenv ejs express mysql2 nodemon bluebird sequelize sequelize-cli
+
+MIGRATION 
+npx sequelize-cli db:migrate
+
+SEEDER
+npx sequelize-cli db:seed:all
