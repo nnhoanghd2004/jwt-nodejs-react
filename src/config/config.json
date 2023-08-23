@@ -7,7 +7,8 @@
     "dialect": "mysql",
     "define": {
       "feezeTableName": true
-    }
+    },
+    "logging": false
   },
   "test": {
     "username": "root",

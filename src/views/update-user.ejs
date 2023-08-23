@@ -15,18 +15,18 @@
     <div class="user-infor-container">
         <form method="POST" action="/user/update-user">
             <div class="container mt-5">
-                <input hidden value="<%= user[0].id%>" name="id">
+                <input hidden value="<%= user.id%>" name="id">
                 <div class="row">
                     <div class="mb-3 col-6">
                         <label for="email" class="form-label">Email address</label>
-                        <input value="<%= user[0].email %>" type="email" class="form-control" name="email" id="email"
+                        <input value="<%= user.email %>" type="email" class="form-control" name="email" id="email"
                             aria-describedby="emailHelp" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-3 col-6">
                         <label class="username" for="user-name">Username</label>
-                        <input value="<%= user[0].username %>" type="text" class="form-control" name="username"
+                        <input value="<%= user.username %>" type="text" class="form-control" name="username"
                             id=" username" required>
                     </div>
                 </div>
