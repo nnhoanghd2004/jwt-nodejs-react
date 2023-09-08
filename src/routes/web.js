@@ -1,6 +1,6 @@
 import express from "express"
 import controller from "../controller/homeController"
-import { testAPI } from "../controller/apiController";
+import apiController from "../controller/apiController";
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ const initWebRoutes = (app) => {
     router.post("/delete-user/:id", controller.handleDeleteUser)
     router.get("/update-user/:id", controller.getUser)
     router.post("/user/update-user", controller.handleUpdateUser)
-    router.get("/test/api", testAPI)
+    router.get("/test/api", apiController.testAPI)
     // default display when open website, start by "/"
     return app.use("/", router);
 }
