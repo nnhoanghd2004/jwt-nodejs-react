@@ -9,12 +9,16 @@ const hashPassword = (password) => {
     return bcrypt.hashSync(password, salt);
 }
 
-const createNewUser = async (email, password, username) => {
+const createNewUser = async (email, password, username, address, phone, sex) => {
+    // console.log(email, password, username, address, phone, sex);
     try {
         await db.User.create({
-            email: email,
+            email,
             password: hashPassword(password),
-            username: username,
+            username,
+            address,
+            sex,
+            phone
         })
     } catch (error) {
         console.log(error);
