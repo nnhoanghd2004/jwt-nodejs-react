@@ -29,13 +29,15 @@ const createNewUser = async (rawUserData) => {
         if (await checkEmailExist(rawUserData.email)) {
             return {
                 EM: "Email already exists",
-                EC: "",
+                EC: "-1",
+                DT: ''
             }
         }
         if (await checkPhoneExist(rawUserData.phone)) {
             return {
                 EM: "Phone already exists",
-                EC: "",
+                EC: "-1",
+                DT: ''
             }
         }
 
@@ -50,13 +52,15 @@ const createNewUser = async (rawUserData) => {
 
         return {
             EM: "Sign Up Success",
-            EC: "",
+            EC: "0",
+            DT: ''
         }
     } catch (e) {
         console.log(e);
         return {
             EM: "Something wrong ...",
-            EC: "",
+            EC: "-1",
+            DT: ''
         }
     }
 }
