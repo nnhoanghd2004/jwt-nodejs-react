@@ -28,8 +28,8 @@ const handleLogin = async (req, res) => {
     } catch (e) {
         console.log(e);
         return res.status(500).json({
-            EM: data.EM,
-            EC: data.EC,
+            EM: 'Something wrong in server',
+            EC: -2,
             DT: ''
         })
     }
