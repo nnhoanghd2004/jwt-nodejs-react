@@ -18,10 +18,21 @@ const handleRegister = async (req, res) => {
 }
 
 const handleLogin = async (req, res) => {
-    return res.status(200).json({
-        message: 'let go',
-        data: 've que'
-    })
+    try {
+        let data = await loginRegisterService.loginUser(req.body)
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: ''
+        })
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: ''
+        })
+    }
     // let data = await loginRegisterService.createNewUser(req.body)
     // return res.status(200).json({
     //     EM: data.EM,

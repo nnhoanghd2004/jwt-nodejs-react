@@ -1,5 +1,6 @@
 import db from "../models"
 import bcryptjs from "bcryptjs";
+import { Op } from "sequelize";
 
 const salt = bcryptjs.genSaltSync(10);
 const hashPassword = (password) => {
@@ -29,14 +30,14 @@ const createNewUser = async (rawUserData) => {
         if (await checkEmailExist(rawUserData.email)) {
             return {
                 EM: "Email already exists",
-                EC: "-1",
+                EC: -1,
                 DT: ''
             }
         }
         if (await checkPhoneExist(rawUserData.phone)) {
             return {
                 EM: "Phone already exists",
-                EC: "-1",
+                EC: -1,
                 DT: ''
             }
         }
@@ -52,19 +53,52 @@ const createNewUser = async (rawUserData) => {
 
         return {
             EM: "Sign Up Success",
-            EC: "0",
+            EC: 0,
             DT: ''
         }
     } catch (e) {
         console.log(e);
         return {
             EM: "Something wrong ...",
-            EC: "-1",
+            EC: -2,
             DT: ''
         }
     }
 }
 
+const loginUser = async (rawUserData) => {
+    try {
+        let user = await db.User.findOne({
+            where: {
+                [Op.or]: [
+                    { email: rawUserData.account },
+                    { phone: rawUserData.account }
+                ]
+            }
+        })
+
+        if (user) {
+            if (bcryptjs.compareSync(rawUserData.password, user.password)) {
+                return {
+                    EM: "Logged in successfully",
+                    EC: 0,
+                    DT: ''
+                }
+            }
+        }
+        return {
+            EM: "Your email or phone number incorrect",
+            EC: -1,
+            DT: ''
+        }
+    } catch (e) {
+        return {
+            EM: "Something wrong in server",
+            EC: -2,
+        }
+    }
+}
+
 module.exports = {
-    createNewUser
+    createNewUser, loginUser
 }
