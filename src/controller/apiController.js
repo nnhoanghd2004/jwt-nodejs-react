@@ -1,4 +1,3 @@
-import userService from '../service/userService'
 import loginRegisterService from '../service/loginRegisterService'
 
 const testAPI = (req, res) => {

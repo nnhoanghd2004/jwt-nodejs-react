@@ -52,14 +52,14 @@ const createNewUser = async (rawUserData) => {
         })
 
         return {
-            EM: "Sign Up Success",
+            EM: "Signed Up Successfully",
             EC: 0,
             DT: ''
         }
     } catch (e) {
         console.log(e);
         return {
-            EM: "Something wrong ...",
+            EM: "Something wrong in server",
             EC: -2,
             DT: ''
         }

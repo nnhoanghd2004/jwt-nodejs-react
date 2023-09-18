@@ -15,8 +15,8 @@ module.exports = {
                     desc: "read user",
                 },
                 {
-                    url: "/user/edit",
-                    desc: "edit user",
+                    url: "/user/update",
+                    desc: "update user",
                 },
                 {
                     url: "user/delete",
