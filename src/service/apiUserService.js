@@ -47,11 +47,12 @@ const getAllUser = async (email, password, username) => {
 
 const getUserWithPage = async (page, limit) => {
     try {
-        console.log("test >>>>>>>>>>>>>>>>");
         let offset = (page - 1) * limit;
         const { count, rows } = await db.User.findAndCountAll({
             offset: offset,
-            limit: limit
+            limit: limit,
+            attributes: ["id", "email", "username", "address", "sex", "phone"],
+            include: { model: db.Group, attributes: ["name", "desc"] }
         });
         const totalPages = Math.ceil(count / limit);
         const data = {
@@ -83,9 +84,22 @@ const getUserWithPage = async (page, limit) => {
 
 const deleteUser = async (id) => {
     try {
-
+        await db.User.destroy({
+            where: {
+                id
+            }
+        })
+        return {
+            EM: "Delete users successfully",
+            EC: 0,
+            DT: ''
+        }
     } catch (e) {
-
+        return {
+            EM: "Something wrong in server",
+            EC: -2,
+            DT: ''
+        }
     }
 }
 

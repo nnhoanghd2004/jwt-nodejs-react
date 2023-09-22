@@ -57,7 +57,12 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-
+        let data = await apiUserService.deleteUser(req.body.id);
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: ''
+        })
     } catch (e) {
         return res.status(500).json({
             EM: "Something wrong in server",
@@ -65,12 +70,6 @@ const deleteUser = async (req, res) => {
             DT: ''
         })
     }
-    let data = await loginRegisterService.createNewUser(req.body)
-    return res.status(200).json({
-        EM: data.EM,
-        EC: data.EC,
-        DT: ''
-    })
 }
 
 module.exports = {
