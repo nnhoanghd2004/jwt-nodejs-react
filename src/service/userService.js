@@ -1,90 +1,171 @@
-// hash Password
-import bcrypt from 'bcryptjs'
-import bluebird from 'bluebird'
-import mysql from 'mysql2/promise'
 import db from '../models';
+import bcryptjs from 'bcryptjs';
+import { Op } from 'sequelize';
 
-const salt = bcrypt.genSaltSync(10);
+const salt = bcryptjs.genSaltSync(10);
 const hashPassword = (password) => {
-    return bcrypt.hashSync(password, salt);
-}
+    return bcryptjs.hashSync(password, salt);
+};
 
-const createNewUser = async (email, password, username, address, phone, sex) => {
-    // console.log(email, password, username, address, phone, sex);
+const checkEmailExist = async (email) => {
+    const data = await db.User.findOne({
+        where: { email },
+    });
+    if (data) {
+        return true;
+    } else return false;
+};
+const checkPhoneExist = async (phone) => {
+    const data = await db.User.findOne({
+        where: { phone },
+    });
+    if (data) {
+        return true;
+    } else return false;
+};
+
+const createUser = async (rawUserData) => {
     try {
+        if (await checkEmailExist(rawUserData.email)) {
+            return {
+                EM: 'Email already exists',
+                EC: -1,
+                DT: '',
+            };
+        }
+        if (await checkPhoneExist(rawUserData.phone)) {
+            return {
+                EM: 'Phone already exists',
+                EC: -1,
+                DT: '',
+            };
+        }
+
         await db.User.create({
-            email,
-            password: hashPassword(password),
-            username,
-            address,
-            sex,
-            phone
-        })
-    } catch (error) {
-        console.log(error);
+            email: rawUserData.email,
+            password: hashPassword(rawUserData.password),
+            username: rawUserData.username,
+            address: rawUserData.address,
+            sex: rawUserData.sex,
+            phone: rawUserData.phone,
+            group: rawUserData.group,
+        });
+
+        return {
+            EM: `Create user ${rawUserData.email} successfully`,
+            EC: 0,
+            DT: '',
+        };
+    } catch (e) {
+        return {
+            EM: 'Something wrong in server',
+            EC: -2,
+            DT: '',
+        };
     }
-}
+};
 
-const getUserList = async (email, password, username) => {
-    return await db.User.findAll()
-    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt', Promise: bluebird });
+const getAllUser = async () => {
+    try {
+        const allUser = await db.User.findAll({
+            attributes: ['id', 'email', 'username', 'address', 'sex', 'phone'],
+            include: { model: db.Group, attributes: ['name', 'desc'] },
+            raw: true,
+        });
+        if (allUser) {
+            return {
+                EM: 'Get all users successfully',
+                EC: 0,
+                DT: allUser,
+            };
+        } else {
+            return {
+                EM: 'Get all users successfully',
+                EC: 0,
+                DT: [],
+            };
+        }
+    } catch (e) {
+        return {
+            EM: 'Something wrong in server',
+            EC: -2,
+            DT: '',
+        };
+    }
+};
 
-    // try {
-    //     const [rows, fields] = await connection.execute('Select * from User');
-    //     return rows;
-    // } catch (error) {
-    //     console.log(error);
-    // }
-}
+const getUserWithPage = async (page, limit) => {
+    try {
+        let offset = (page - 1) * limit;
+        const { count, rows } = await db.User.findAndCountAll({
+            offset: offset,
+            limit: limit,
+            attributes: ['id', 'email', 'username', 'address', 'sex', 'phone'],
+            include: { model: db.Group, attributes: ['name', 'desc'] },
+        });
+        const totalPages = Math.ceil(count / limit);
+        const data = {
+            totalPages,
+            totalRows: count,
+            users: rows,
+        };
+        if (count && rows) {
+            return {
+                EM: 'Get page users successfully',
+                EC: 0,
+                DT: data,
+            };
+        } else {
+            return {
+                EM: 'Get all users successfully',
+                EC: 0,
+                DT: [],
+            };
+        }
+    } catch (e) {
+        return {
+            EM: 'Something wrong in server',
+            EC: -2,
+            DT: '',
+        };
+    }
+};
 
 const deleteUser = async (id) => {
-    await db.User.destroy({
-        where: {
-            id
-        }
-    })
-    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt', Promise: bluebird });
+    try {
+        await db.User.destroy({
+            where: {
+                id,
+            },
+        });
+        return {
+            EM: 'Delete users successfully',
+            EC: 0,
+            DT: '',
+        };
+    } catch (e) {
+        return {
+            EM: 'Something wrong in server',
+            EC: -2,
+            DT: '',
+        };
+    }
+};
 
-    // try {
-    //     const [rows, fields] = await connection.execute('DELETE FROM User WHERE id=?',
-    //         [id]);
-    //     return rows
-    // } catch (error) {
-    //     console.log(error);
-    // }
-}
+const updateUser = async (email, username, id) => {
+    try {
+    } catch (e) {}
+};
 
 const getUserById = async (id) => {
-    return await db.User.findOne({
-        where: {
-            id
-        }
-    })
-    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt', Promise: bluebird });
-
-    // try {
-    //     const [rows, fields] = await connection.execute('Select * FROM User WHERE id=?',
-    //         [id]);
-    //     return rows
-    // } catch (error) {
-    //     console.log(error);
-    // }
-}
-const updateUser = async (email, username, id) => {
-    await db.User.update(
-        { email, username, },
-        { where: { id } }
-    )
-    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt', Promise: bluebird });
-
-    // try {
-    //     const [rows, fields] = await connection.execute('UPDATE User SET email=?, username=? WHERE id=?',
-    //         [email, username, id]);
-    //     return rows
-    // } catch (error) {
-    //     console.log(error);
-    // }
-}
+    try {
+    } catch (e) {}
+};
 module.exports = {
-    createNewUser, getUserList, deleteUser, getUserById, updateUser
-}
+    createUser,
+    getAllUser,
+    deleteUser,
+    getUserById,
+    updateUser,
+    getUserWithPage,
+};

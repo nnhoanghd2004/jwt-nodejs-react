@@ -1,4 +1,4 @@
-import express from "express"
+import express from 'express';
 
 /**
  * @param {*} app - express app
@@ -6,8 +6,8 @@ import express from "express"
 const configViewEngine = (app) => {
     app.use(express.static('./src/public'));
 
-    app.set("view engine", "ejs");
-    app.set("views", "./src/views");
-}
+    app.set('view engine', 'ejs');
+    app.set('views', './src/views');
+};
 
 export default configViewEngine;

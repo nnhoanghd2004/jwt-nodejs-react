@@ -7,14 +7,29 @@ module.exports = {
          * Add seed commands here.
          *
          * Example:
-        */
-        await queryInterface.bulkInsert('Group',
+         */
+        await queryInterface.bulkInsert(
+            'Group',
             [
                 {
-                    name: "DEV",
-                    desc: "Developers",
-                }
-            ], {});
+                    name: 'Customer',
+                    desc: 'Customer',
+                },
+                {
+                    name: 'Developers',
+                    desc: 'Developers',
+                },
+                {
+                    name: 'Leader',
+                    desc: 'Leader',
+                },
+                {
+                    name: 'Project Manager',
+                    desc: 'Project Manager',
+                },
+            ],
+            {},
+        );
     },
 
     async down(queryInterface, Sequelize) {
@@ -24,5 +39,5 @@ module.exports = {
          * Example:
          * await queryInterface.bulkDelete('People', null, {});
          */
-    }
+    },
 };

@@ -7,8 +7,9 @@ module.exports = {
          * Add seed commands here.
          *
          * Example:
-        */
-        await queryInterface.bulkInsert('GroupRole',
+         */
+        await queryInterface.bulkInsert(
+            'GroupRole',
             [
                 {
                     groupId: 1,
@@ -18,7 +19,9 @@ module.exports = {
                     groupId: 1,
                     roleId: 2,
                 },
-            ], {});
+            ],
+            {},
+        );
     },
 
     async down(queryInterface, Sequelize) {
@@ -28,5 +31,5 @@ module.exports = {
          * Example:
          * await queryInterface.bulkDelete('People', null, {});
          */
-    }
+    },
 };

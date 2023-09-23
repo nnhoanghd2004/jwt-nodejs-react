@@ -1,13 +1,13 @@
-import express from "express"
-import configViewEngine from "./config/viewEngine"
-import initWebRoutes from "./routes/web"
-import initApiRoutes from "./routes/api"
-import bodyParser from "body-parser"
-import configCORS from "./config/cors"
+import express from 'express';
+import configViewEngine from './config/viewEngine';
+import initWebRoutes from './routes/web';
+import initApiRoutes from './routes/api';
+import bodyParser from 'body-parser';
+import configCORS from './config/cors';
 // import testConnect from "./config/connectDB"
 
 // sử dụng port
-require("dotenv").config();
+require('dotenv').config();
 
 // test connection
 // testConnect()
@@ -30,6 +30,6 @@ initWebRoutes(app);
 initApiRoutes(app);
 
 app.listen(POST, () => {
-    console.log("JWT BACKEND IS RUNNING " + POST);
+    console.log('JWT BACKEND IS RUNNING ' + POST);
     console.log(process.env.REACT_URL);
-})
+});

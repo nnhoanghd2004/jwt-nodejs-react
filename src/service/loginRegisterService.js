@@ -1,45 +1,44 @@
-import db from "../models"
-import bcryptjs from "bcryptjs";
-import { Op } from "sequelize";
+import db from '../models';
+import bcryptjs from 'bcryptjs';
+import { Op } from 'sequelize';
 
 const salt = bcryptjs.genSaltSync(10);
 const hashPassword = (password) => {
     return bcryptjs.hashSync(password, salt);
-}
+};
 
 const checkEmailExist = async (email) => {
     const data = await db.User.findOne({
-        where: { email }
-    })
+        where: { email },
+    });
     if (data) {
         return true;
     } else return false;
-}
+};
 const checkPhoneExist = async (phone) => {
     const data = await db.User.findOne({
-        where: { phone }
-    })
+        where: { phone },
+    });
     if (data) {
         return true;
     } else return false;
-}
-
+};
 
 const createNewUser = async (rawUserData) => {
     try {
         if (await checkEmailExist(rawUserData.email)) {
             return {
-                EM: "Email already exists",
+                EM: 'Email already exists',
                 EC: -1,
-                DT: ''
-            }
+                DT: '',
+            };
         }
         if (await checkPhoneExist(rawUserData.phone)) {
             return {
-                EM: "Phone already exists",
+                EM: 'Phone already exists',
                 EC: -1,
-                DT: ''
-            }
+                DT: '',
+            };
         }
 
         await db.User.create({
@@ -48,57 +47,55 @@ const createNewUser = async (rawUserData) => {
             username: rawUserData.username,
             address: rawUserData.address,
             sex: rawUserData.sex,
-            phone: rawUserData.phone
-        })
+            phone: rawUserData.phone,
+        });
 
         return {
-            EM: "Signed Up Successfully",
+            EM: 'Signed Up Successfully',
             EC: 0,
-            DT: ''
-        }
+            DT: '',
+        };
     } catch (e) {
         console.log(e);
         return {
-            EM: "Something wrong in server",
+            EM: 'Something wrong in server',
             EC: -2,
-            DT: ''
-        }
+            DT: '',
+        };
     }
-}
+};
 
 const loginUser = async (rawUserData) => {
     try {
         let user = await db.User.findOne({
             where: {
-                [Op.or]: [
-                    { email: rawUserData.account },
-                    { phone: rawUserData.account }
-                ]
-            }
-        })
+                [Op.or]: [{ email: rawUserData.account }, { phone: rawUserData.account }],
+            },
+        });
 
         if (user) {
             if (bcryptjs.compareSync(rawUserData.password, user.password)) {
                 return {
-                    EM: "Logged in successfully",
+                    EM: 'Logged in successfully',
                     EC: 0,
-                    DT: ''
-                }
+                    DT: '',
+                };
             }
         }
         return {
-            EM: "Your email or phone number incorrect",
+            EM: 'Your email or phone number incorrect',
             EC: -1,
-            DT: ''
-        }
+            DT: '',
+        };
     } catch (e) {
         return {
-            EM: "Something wrong in server",
+            EM: 'Something wrong in server',
             EC: -2,
-        }
+        };
     }
-}
+};
 
 module.exports = {
-    createNewUser, loginUser
-}
+    createNewUser,
+    loginUser,
+};

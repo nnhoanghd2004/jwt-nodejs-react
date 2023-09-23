@@ -1,9 +1,8 @@
-require("dotenv").config();
+require('dotenv').config();
 
 const configCORS = (app) => {
     // Add headers before the routes are defined
     app.use(function (req, res, next) {
-
         // Website you wish to allow to connect
         res.setHeader('Access-Control-Allow-Origin', process.env.REACT_URL);
 
@@ -20,6 +19,6 @@ const configCORS = (app) => {
         // Pass to next layer of middleware
         next();
     });
-}
+};
 
 export default configCORS;

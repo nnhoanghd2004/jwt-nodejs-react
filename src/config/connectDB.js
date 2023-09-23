@@ -4,7 +4,7 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('jwt', 'root', null, {
     host: 'localhost',
     /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
-    dialect: 'mysql'
+    dialect: 'mysql',
 });
 
 const testConnect = async () => {
@@ -14,5 +14,5 @@ const testConnect = async () => {
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
-}
+};
 export default testConnect;
