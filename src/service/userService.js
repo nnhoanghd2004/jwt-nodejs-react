@@ -1,5 +1,6 @@
 import db from '../models';
 import bcryptjs from 'bcryptjs';
+import groupService from '../service/groupService';
 import { Op } from 'sequelize';
 
 const salt = bcryptjs.genSaltSync(10);
@@ -48,7 +49,7 @@ const createUser = async (rawUserData) => {
             address: rawUserData.address,
             sex: rawUserData.sex,
             phone: rawUserData.phone,
-            group: rawUserData.group,
+            groupId: rawUserData.group,
         });
 
         return {
@@ -152,9 +153,25 @@ const deleteUser = async (id) => {
     }
 };
 
-const updateUser = async (email, username, id) => {
+const updateUser = async (data) => {
     try {
-    } catch (e) {}
+        await db.User.update(
+            { username: data.username, address: data.address, phone: data.phone, sex: data.sex, group: data.group },
+            { where: { id: data.id } },
+        );
+        console.log('check user service');
+        return {
+            EM: `Update user ${data.email} successfully`,
+            EC: 0,
+            DT: '',
+        };
+    } catch (e) {
+        return {
+            EM: `Something wrong in server service`,
+            EC: -2,
+            DT: '',
+        };
+    }
 };
 
 const getUserById = async (id) => {

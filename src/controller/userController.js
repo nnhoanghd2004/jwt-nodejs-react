@@ -13,11 +13,7 @@ const handleReadUser = async (req, res) => {
     try {
         let data = await userService.getUserWithPage(+req.query.page, +req.query.limit);
         if (data) {
-            return res.status(200).json({
-                EM: data.EM,
-                EC: data.EC,
-                DT: data.DT,
-            });
+            return res.status(200).json(data);
         } else {
             return res.status(500).json({
                 EM: 'Something wrong in server',
@@ -36,6 +32,7 @@ const handleReadUser = async (req, res) => {
 
 const handleUpdateUser = async (req, res) => {
     try {
+        return res.status(200).json(await userService.updateUser(req.body));
     } catch (e) {
         return res.status(500).json({
             EM: 'Something wrong in server',
@@ -43,22 +40,11 @@ const handleUpdateUser = async (req, res) => {
             DT: '',
         });
     }
-    let data = await loginRegisterService.createNewUser(req.body);
-    return res.status(200).json({
-        EM: data.EM,
-        EC: data.EC,
-        DT: '',
-    });
 };
 
 const handleDeleteUser = async (req, res) => {
     try {
-        let data = await userService.deleteUser(req.body.id);
-        return res.status(200).json({
-            EM: data.EM,
-            EC: data.EC,
-            DT: '',
-        });
+        return res.status(200).json(await userService.deleteUser(req.body.id));
     } catch (e) {
         return res.status(500).json({
             EM: 'Something wrong in server',
