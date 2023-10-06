@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 // for mysql2
-const sequelize = new Sequelize('jwt1', 'root', null, {
+const sequelize = new Sequelize('jwt', 'root', null, {
     host: 'localhost',
     /* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
     dialect: 'mysql',

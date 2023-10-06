@@ -156,7 +156,7 @@ const deleteUser = async (id) => {
 const updateUser = async (data) => {
     try {
         await db.User.update(
-            { username: data.username, address: data.address, phone: data.phone, sex: data.sex, group: data.group },
+            { username: data.username, address: data.address, phone: data.phone, sex: data.sex, groupId: data.group },
             { where: { id: data.id } },
         );
         console.log('check user service');

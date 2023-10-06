@@ -27,7 +27,7 @@ const createNewUser = async (email, password, username, address, phone, sex) => 
 
 const getUserList = async (email, password, username) => {
     return await db.User.findAll();
-    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt1', Promise: bluebird });
+    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt', Promise: bluebird });
 
     // try {
     //     const [rows, fields] = await connection.execute('Select * from User');
@@ -43,7 +43,7 @@ const deleteUser = async (id) => {
             id,
         },
     });
-    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt1', Promise: bluebird });
+    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt', Promise: bluebird });
 
     // try {
     //     const [rows, fields] = await connection.execute('DELETE FROM User WHERE id=?',
@@ -60,7 +60,7 @@ const getUserById = async (id) => {
             id,
         },
     });
-    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt1', Promise: bluebird });
+    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt', Promise: bluebird });
 
     // try {
     //     const [rows, fields] = await connection.execute('Select * FROM User WHERE id=?',
@@ -72,7 +72,7 @@ const getUserById = async (id) => {
 };
 const updateUser = async (email, username, id) => {
     await db.User.update({ email, username }, { where: { id } });
-    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt1', Promise: bluebird });
+    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt', Promise: bluebird });
 
     // try {
     //     const [rows, fields] = await connection.execute('UPDATE User SET email=?, username=? WHERE id=?',

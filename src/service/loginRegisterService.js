@@ -40,7 +40,7 @@ const createNewUser = async (rawUserData) => {
                 DT: '',
             };
         }
-
+        console.log(rawUserData);
         await db.User.create({
             email: rawUserData.email,
             password: hashPassword(rawUserData.password),
@@ -48,6 +48,7 @@ const createNewUser = async (rawUserData) => {
             address: rawUserData.address,
             sex: rawUserData.sex,
             phone: rawUserData.phone,
+            groupId: 1
         });
 
         return {
